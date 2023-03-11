@@ -50,19 +50,37 @@ const getTask=()=>{
     } 
 
  
-  const deletehall =()=>{
+  const deletehall =(tasks)=>{
     setTareas([])
     fetch("https://assets.breatheco.de/apis/fake/todos/user/LuizzKro",{
       method: "PUT",
       headers:{
         "Content-Type": "application/json",
       },
-      body: JSON.stringify([])
+      body: JSON.stringify([]),
   })
   .then(response=>response.json ())
   .then(data=>console.log(data))
   .catch(error=>console.log(error))
     }
+
+    const deleteOne = (index) => {
+      const newTasks = [...tareas];
+      newTasks.splice(index, 1);
+      setTareas(newTasks);
+      fetch('https://assets.breatheco.de/apis/fake/todos/user/LuiszzKro', {
+        method: "PUT",
+        body: JSON.stringify(newTasks),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log("Tarea eliminada:", newTasks);
+        })
+        .catch(err => console.error(err));
+    };  
   
     useEffect(() => {
       createUser()
@@ -79,7 +97,7 @@ const getTask=()=>{
           placeholder="Agregar tareas"
           onChange={(e) => setInputValue(e.target.value)}
           value={inputValue}
-          onKeyPress={(e) => {
+          onKeyDown={(e) => {
             if (e.key === "Enter") {
               setTareas(tareas.concat({label: inputValue, done: false}));
               setInputValue("")
@@ -96,11 +114,7 @@ const getTask=()=>{
               </p>
               <button
                 className="btn-delete "
-                onClick={() =>
-                  setTareas(
-                    tareas.filter((t, currentIndex) => index != currentIndex)
-                  )
-                }
+                onClick={deleteOne}
               >
                 {eliminar}
               </button>
