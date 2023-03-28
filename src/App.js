@@ -25,15 +25,17 @@ function App() {
   };
 
 
+  
+
 const getTask=()=>{
   fetch("https://assets.breatheco.de/apis/fake/todos/user/LuizzKro")
   .then((response) => response.json()) 
-      .then((data) => console.log(data))
+      .then((data) => setTareas(data))
       .catch((error) => console.log(error));
 }
 
 
-  const obtenerTodoList=(nuevasTareas)=> {
+  const obtenerTodoList=()=> {
    
     fetch("https://assets.breatheco.de/apis/fake/todos/user/LuizzKro", {
       
@@ -41,7 +43,7 @@ const getTask=()=>{
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(nuevasTareas),
+      body: JSON.stringify(),
     })
       .then((response) => response.json()) 
       .then((data) => console.log(data)) 
@@ -50,14 +52,14 @@ const getTask=()=>{
     } 
 
  
-  const deletehall =(tasks)=>{
+  const deletehall =()=>{
     setTareas([])
     fetch("https://assets.breatheco.de/apis/fake/todos/user/LuizzKro",{
       method: "PUT",
       headers:{
         "Content-Type": "application/json",
       },
-      body: JSON.stringify([]),
+      body: JSON.stringify([{label: "none", done: false}])
   })
   .then(response=>response.json ())
   .then(data=>console.log(data))
@@ -110,7 +112,7 @@ const getTask=()=>{
             <li key={index}  className="lista list-group-item d-flex justify-content-between">
               <p>
                 {item.label}
-                {""}
+            
               </p>
               <button
                 className="btn-delete "
