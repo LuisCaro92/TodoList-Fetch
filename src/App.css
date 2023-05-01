@@ -33,3 +33,8 @@ ul{
   font-size: 1.2em;
   border-radius: 10px;
 }
+
+.cuerpo{
+  background-color: rgb(247, 223, 247);
+  margin-left: 800px;
+}
